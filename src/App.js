@@ -4,9 +4,9 @@ import './App.css';
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
+      <header className="App-header ">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
+        <p className="bg-red-600">
           Edit <code>src/App.js</code> and save to reload.
         </p>
         <a
