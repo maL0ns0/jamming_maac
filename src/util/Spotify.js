@@ -72,6 +72,42 @@ export const Spotify ={
         });
 
         return tracks;
-    }
+    },
+    async savePlayList(playListName, tracksUri){
+        
+        //si alguna esta vacia salimos.
+        if(!(playListName && tracksUri)){
+            return;
+        }
 
+        let hdrs = {Authorization: `Bearer ${userAccessTkn}`};
+        
+        //Obtenemos nombre de usuario de spotify
+        let userId = await fetch('https://api.spotify.com/v1/me', {headers: hdrs})
+        .then(resp => resp.json())
+        .then(jsonResp => jsonResp.id)
+        .catch(error => console.log("Error geting usId:" + error));
+
+        //Obtenemos id para la lista
+        hdrs["Content-Type"] = 'application/json';
+        let playlistID = await fetch(`https://api.spotify.com/v1/users/${userId}/playlists`,
+        {
+            method: 'POST',
+            headers: hdrs,
+            body: JSON.stringify({name: playListName}),
+            json: true
+        })
+        .then(resp => resp.json())
+        .then(jsonResp => jsonResp.id)
+        .catch(error => console.log('Error geting playlist id: ' + error));
+
+        //Guardamos las canciones en la playlist de spotify
+        await fetch(`https://api.spotify.com/v1/playlists/${playlistID}/tracks`, {
+            method: 'POST',
+            headers: hdrs,
+            body: JSON.stringify({uris: tracksUri})
+        })
+        .then(resp => {console.log('Tracks added to playlist')})
+        .catch(error => {console.log('Error adding the tracks to plst: ' + error)})
+    }
 }

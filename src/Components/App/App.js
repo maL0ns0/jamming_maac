@@ -11,8 +11,8 @@ class App extends React.Component {
   constructor(props){
     super(props);
     this.state = {searchResults: []}
-    this.state.playlistName = 'My Play List';
-    this.state.playlistTracks = []; //,{name:'111',artist:'222', album:'333', id:4}
+    this.state.playlistName = 'New Playlist';
+    this.state.playlistTracks = [];
     this.addTrack = this.addTrack.bind(this);
     this.removeTrack = this.removeTrack.bind(this);
     this.updatePlaylistName = this.updatePlaylistName.bind(this);
@@ -36,7 +36,10 @@ class App extends React.Component {
   //de los tracks para spotify
   savePlaylist(){
     let trackURIs = this.state.playlistTracks.map(track => track + 'uri');
-    return trackURIs;
+    Spotify.savePlayList(this.state.playlistName, trackURIs);
+    //limpiamos
+    this.setState({playlistName: 'New Playlist'});
+    this.setState({playlistTracks: []});
   }
   
   
@@ -81,21 +84,5 @@ class App extends React.Component {
   }
 }
 
-
-/*
-function App() {
-  return (
-  <div>
-  <h1 className="text-white text-center bg-gray-900 opacity-90 font-poppins text-3xl py-3">Ja<span className="text-purple-600">mmm</span>ing</h1>
-  <div className="text-white font-worksans font-medium pt-0 pr-[17%] pb-[10%] pl-[17%]">
-    <SearchBar />
-    <div className="App-playlist flex flex-col items-center lg:flex-row lg:w-[100%] lg:justify-between">
-      <SearchResults />
-      <Playlist />
-    </div>
-  </div>
-</div>
-);
-}*/
 
 export default App;
