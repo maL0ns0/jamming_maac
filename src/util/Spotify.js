@@ -1,6 +1,6 @@
 let userAccessTkn = '';
 const clientId = '7461604a1a9943e28444e8273a891779';
-const redirectUrl = 'MAAC_JAMMING.surge.sh'; //http://localhost:3000/
+const redirectUrl = 'http://localhost:3000/'; //http://localhost:3000/  //https://maac_jamming.surge.sh
 
 export const Spotify ={
     getRandomString(length) {
